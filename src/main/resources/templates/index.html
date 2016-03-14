@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{supplier.list.header}">Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script th:src="@{/webjars/jquery/2.0.3/jquery.min.js}"/>
+    <link th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <ul class="pagination" th:each="i : ${#numbers.sequence( 1, __${stockPage.getTotalPages()}__)}">
+        <li th:class="${i eq page} ? 'active' : ''"><a th:href="@{'/page/' + ${i} + '/' + ${pageSize} + '/sku'}" th:text="${i}"></a></li>
+    </ul>
+
+    <table class="table table-striped" th:unless="${#lists.isEmpty(stockPage.getContent())}">
+        <thead>
+        <tr>
+            <th th:text="#{supplier.name}">sku</th>
+            <th th:text="#{supplier.description}">name</th>
+            <th th:text="#{supplier.site}">amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stockItem : ${stockPage.getContent()}">
+            <td th:text="${{stockItem.sku}}">sku</td>
+            <td th:text="${{stockItem.name}}">name</td>
+            <td th:text="${{stockItem.amount}}">amount</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>
