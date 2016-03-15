@@ -3,8 +3,10 @@ package unit;
 import app.WordsAdmin;
 import app.model.Word;
 import app.model.WordType;
+import app.repository.WordRepository;
 import app.service.WordService;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,14 @@ public class WordTest {
 
     @Autowired
     protected WordService wordService;
+
+    @Autowired
+    protected WordRepository wordRepository;
+
+    @Before
+    public void clearRepos() {
+        wordRepository.deleteAll();
+    }
 
     @Test
     public void createAndFindNewWordNoun() {
@@ -77,15 +87,15 @@ public class WordTest {
 
     @Test
     public void createWordCount() {
-        String word = "chair";
-        wordService.create(word, WordType.NOUN);
-        Word foundWord = wordService.findByValue(word);
-        Assert.assertEquals((long)0, (long)wordService.findByValue(word).viewCount);
+        String wordValue = "chair";
+        wordService.create(wordValue, WordType.NOUN);
+        Word foundWord = wordService.findByValue(wordValue);
+        Assert.assertEquals((long)0, (long)wordService.findByValue(wordValue).viewCount);
 
         wordService.view(foundWord);
-        Assert.assertEquals((long)1, (long)wordService.findByValue(word).viewCount);
+        Assert.assertEquals((long)1, (long)wordService.findByValue(wordValue).viewCount);
 
-        wordService.view(word);
-        Assert.assertEquals((long)2, (long)wordService.findByValue(word).viewCount);
+        wordService.view(wordValue);
+        Assert.assertEquals((long)2, (long)wordService.findByValue(wordValue).viewCount);
     }
 }
