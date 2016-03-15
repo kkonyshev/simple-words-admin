@@ -1,6 +1,10 @@
 package app.model;
 
+import app.ObjectPrinter;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,4 +22,16 @@ public class Collocation {
     @Column
     @Enumerated(EnumType.STRING)
     public CollocationType type;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ID")
+    public List<Word> words = new ArrayList<>();
+
+    @Column
+    public Integer viewCount = 0;
+
+    @Override
+    public String toString() {
+        return new ObjectPrinter().merge(id, type, words);
+    }
 }

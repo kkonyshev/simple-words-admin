@@ -5,12 +5,14 @@ import app.model.WordType;
 import app.repository.WordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * Created by ka on 06/03/16.
  */
 @Service
+@Transactional
 public class WordService {
 
     @Autowired
@@ -20,7 +22,7 @@ public class WordService {
         return wordRepository.findAll();
     }
 
-    public Word fineByValue(String value) {
+    public Word findByValue(String value) {
         return wordRepository.findByValue(value);
     }
 
@@ -28,6 +30,17 @@ public class WordService {
         Word word = new Word();
         word.type = type;
         word.value = value;
+        return wordRepository.save(word);
+    }
+
+    public Word view(Word word) {
+        word.viewCount++;
+        return wordRepository.save(word);
+    }
+
+    public Word view(String value) {
+        Word word = wordRepository.findByValue(value);
+        word.viewCount++;
         return wordRepository.save(word);
     }
 }

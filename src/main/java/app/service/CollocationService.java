@@ -3,16 +3,17 @@ package app.service;
 import app.model.Collocation;
 import app.model.CollocationType;
 import app.model.Word;
-import app.model.WordType;
 import app.repository.CollocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * Created by ka on 06/03/16.
  */
 @Service
+@Transactional
 public class CollocationService {
 
     @Autowired
@@ -26,6 +27,26 @@ public class CollocationService {
         Collocation collocation = new Collocation();
         collocation.type = type;
         collocation.value = value;
+        return collocationRepository.save(collocation);
+    }
+
+    public Collocation addWord(Collocation collocation, Word word) {
+        collocation.words.add(word);
+        return collocationRepository.save(collocation);
+    }
+
+    public Collocation clearWords(Collocation collocation) {
+        collocation.words.clear();
+        return collocationRepository.save(collocation);
+    }
+
+    public Collocation removeWord(Collocation collocation, Word word) {
+        collocation.words.remove(word);
+        return collocationRepository.save(collocation);
+    }
+
+    public Collocation view(Collocation collocation) {
+        collocation.viewCount++;
         return collocationRepository.save(collocation);
     }
 }

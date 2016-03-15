@@ -18,14 +18,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class WordTest {
 
     @Autowired
-    protected WordService literalService;
+    protected WordService wordService;
 
     @Test
     public void createAndFindNewWordNoun() {
         String word = "table";
 
-        Word createdWord = literalService.create(word, WordType.NOUN);
-        Word foundWord = literalService.fineByValue(word);
+        Word createdWord = wordService.create(word, WordType.NOUN);
+        Word foundWord = wordService.findByValue(word);
 
         Assert.assertEquals(word, createdWord.value);
         Assert.assertEquals(word, foundWord.value);
@@ -38,8 +38,8 @@ public class WordTest {
     public void createAndFindNewWordAdj() {
         String word = "quick";
 
-        Word createdWord = literalService.create(word, WordType.ADJECTIVE);
-        Word foundWord = literalService.fineByValue(word);
+        Word createdWord = wordService.create(word, WordType.ADJECTIVE);
+        Word foundWord = wordService.findByValue(word);
 
         Assert.assertEquals(word, createdWord.value);
         Assert.assertEquals(word, foundWord.value);
@@ -52,8 +52,8 @@ public class WordTest {
     public void createAndFindNewWordVerb() {
         String word = "lead";
 
-        Word createdWord = literalService.create(word, WordType.VERB);
-        Word foundWord = literalService.fineByValue(word);
+        Word createdWord = wordService.create(word, WordType.VERB);
+        Word foundWord = wordService.findByValue(word);
 
         Assert.assertEquals(word, createdWord.value);
         Assert.assertEquals(word, foundWord.value);
@@ -64,12 +64,26 @@ public class WordTest {
 
     @Test
     public void checkAddWord() {
-        Iterable<Word> resListBefore = literalService.findAll();
+        Iterable<Word> resListBefore = wordService.findAll();
         long sizeBefore = resListBefore.spliterator().getExactSizeIfKnown();
-        literalService.create("chair", WordType.NOUN);
+        wordService.create("chair", WordType.NOUN);
 
-        Iterable<Word> resListAfter = literalService.findAll();
+        Iterable<Word> resListAfter = wordService.findAll();
         long sizeAfter = resListAfter.spliterator().getExactSizeIfKnown();
         Assert.assertEquals(sizeBefore+1, sizeAfter);
+    }
+
+    @Test
+    public void createWordCount() {
+        String word = "chair";
+        wordService.create(word, WordType.NOUN);
+        Word foundWord = wordService.findByValue(word);
+        Assert.assertEquals((long)0, (long)wordService.findByValue(word).viewCount);
+
+        wordService.view(foundWord);
+        Assert.assertEquals((long)1, (long)wordService.findByValue(word).viewCount);
+
+        wordService.view(word);
+        Assert.assertEquals((long)2, (long)wordService.findByValue(word).viewCount);
     }
 }
