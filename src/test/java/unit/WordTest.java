@@ -3,6 +3,7 @@ package unit;
 import app.WordsAdmin;
 import app.model.Word;
 import app.model.WordType;
+import app.repository.CollocationRepository;
 import app.repository.WordRepository;
 import app.service.WordService;
 import org.junit.Assert;
@@ -12,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Iterator;
 
 /**
  *
@@ -27,8 +30,12 @@ public class WordTest {
     @Autowired
     protected WordRepository wordRepository;
 
+    @Autowired
+    protected CollocationRepository collocationRepository;
+
     @Before
     public void clearRepos() {
+        collocationRepository.deleteAll();
         wordRepository.deleteAll();
     }
 
