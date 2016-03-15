@@ -11,6 +11,7 @@ import java.util.List;
  * Created by ka on 06/03/16.
  */
 @Entity
+@Table(name="collocation", uniqueConstraints = {@UniqueConstraint(columnNames={"type", "value"})})
 public class Collocation {
     @Id
     @Column(unique = true)

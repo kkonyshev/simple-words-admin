@@ -1,3 +1,5 @@
+package unit;
+
 import app.WordsAdmin;
 import app.model.Word;
 import app.model.WordType;
