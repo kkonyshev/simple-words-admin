@@ -13,10 +13,11 @@ import java.util.List;
 @Entity
 public class Collocation {
     @Id
+    @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.TABLE)
     public Long id;
 
-    @Column
+    @Column(unique = true)
     public String value;
 
     @Column
