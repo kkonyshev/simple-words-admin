@@ -1,3 +1,5 @@
+package unit;
+
 import app.WordsAdmin;
 import app.model.Word;
 import app.model.WordType;
@@ -25,7 +27,7 @@ public class WordTest {
         String word = "table";
 
         Word createdWord = literalService.create(word, WordType.NOUN);
-        Word foundWord = literalService.fineByValue(word);
+        Word foundWord = literalService.findByValue(word);
 
         Assert.assertEquals(word, createdWord.value);
         Assert.assertEquals(word, foundWord.value);
@@ -39,7 +41,7 @@ public class WordTest {
         String word = "quick";
 
         Word createdWord = literalService.create(word, WordType.ADJECTIVE);
-        Word foundWord = literalService.fineByValue(word);
+        Word foundWord = literalService.findByValue(word);
 
         Assert.assertEquals(word, createdWord.value);
         Assert.assertEquals(word, foundWord.value);
@@ -53,7 +55,7 @@ public class WordTest {
         String word = "lead";
 
         Word createdWord = literalService.create(word, WordType.VERB);
-        Word foundWord = literalService.fineByValue(word);
+        Word foundWord = literalService.findByValue(word);
 
         Assert.assertEquals(word, createdWord.value);
         Assert.assertEquals(word, foundWord.value);

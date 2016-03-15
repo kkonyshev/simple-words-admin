@@ -20,7 +20,7 @@ public class WordService {
         return wordRepository.findAll();
     }
 
-    public Word fineByValue(String value) {
+    public Word findByValue(String value) {
         return wordRepository.findByValue(value);
     }
 
