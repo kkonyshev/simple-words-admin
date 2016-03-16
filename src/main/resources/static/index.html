@@ -11,7 +11,6 @@
     <div class="alert alert-info" role="alert" ng-hide="words && words.length > 0">
         Нет слов
     </div>
-
     <form class="form-inline" role="form" ng-submit="addWord(newWordValue, newWordType)">
         <div class="input-group">
             <div class="form-group">
@@ -44,6 +43,9 @@
             </td>
             <td>
                 <input type="text" class="form-control" ng-model="word.type"/>
+                <select name="repeatSelect" id="repeatSelect" ng-model="wordTypeList">
+                    <option ng-repeat="type in wordTypeList" value="{{type}}">{{type}}</option>
+                </select>
             </td>
             <td>
                 <button class="pull-right btn btn-warning" type="button" title="Update" ng-click="updateWord(word)">

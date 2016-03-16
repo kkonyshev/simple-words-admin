@@ -1,5 +1,5 @@
 (function(angular) {
-    var AppController = function($scope, Word) {
+    var AppController = function($scope, $http, Word) {
         Word.query(function(response) {
             $scope.words = response ? response : [];
         });
@@ -24,8 +24,15 @@
                 $scope.words.splice($scope.words.indexOf(word), 1);
             });
         };
+
+        $scope.wordTypeList = [];
+        $http.get('/word/type').success(function(data) {
+            console.log("success!");
+            $scope.wordTypeList = data;
+            console.log(data);
+        });
     };
 
-    AppController.$inject = ['$scope', 'Word'];
+    AppController.$inject = ['$scope', '$http', 'Word'];
     angular.module("myApp.controllers").controller("AppController", AppController);
 }(angular));
