@@ -1,0 +1,29 @@
+(function(angular) {
+    var AppController = function($scope, Word) {
+        Word.query(function(response) {
+            $scope.words = response ? response : [];
+        });
+
+        $scope.addWord = function(value) {
+            new Word({
+                value: value
+            }).$save(function(word) {
+                $scope.words.push(word);
+            });
+            $scope.newWord = "";
+        };
+
+        $scope.updateWord = function(word) {
+            word.$update();
+        };
+
+        $scope.deleteWord = function(word) {
+            word.$remove(function() {
+                $scope.words.splice($scope.words.indexOf(item), 1);
+            });
+        };
+    };
+
+    AppController.$inject = ['$scope', 'Word'];
+    angular.module("myApp.controllers").controller("AppController", AppController);
+}(angular));

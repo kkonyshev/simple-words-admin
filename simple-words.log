@@ -1,4 +1,4 @@
-/*C21*/SET SCHEMA PUBLIC
+/*C12*/SET SCHEMA PUBLIC
 alter table collocation drop constraint UK_9nopgnib032w7wky8ao1xk2hg
 alter table collocation add constraint UK_9nopgnib032w7wky8ao1xk2hg unique (type, value)
 alter table word drop constraint UK_541j4thbnmc24u75xk17f2a03

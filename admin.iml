@@ -76,6 +76,7 @@
     <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy:2.4.4" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:jquery:2.0.3-1" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:bootstrap:3.3.5" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:react:0.14.7" level="project" />
     <orderEntry type="library" name="Maven: org.hsqldb:hsqldb:2.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi:3.13" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.9" level="project" />

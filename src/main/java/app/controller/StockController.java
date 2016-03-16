@@ -30,6 +30,11 @@ public class StockController {
     @Autowired
     protected StockRepository stockRepository;
 
+    @RequestMapping("/")
+    public ModelAndView root() {
+        return new ModelAndView("react");
+    }
+
     @RequestMapping("/find/{sku}")
     public Stock findById(@PathVariable("sku") String sku) {
         return stockRepository.findOne(sku);
@@ -50,12 +55,14 @@ public class StockController {
         return stockRepository.findAll(new PageRequest(0, 20, Sort.Direction.ASC, "sku"));
     }
 
+    /*
     @RequestMapping(path = {"/"})
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("stockList", findAll());
         return modelAndView;
     }
+    */
 
     @RequestMapping("/load")
     public String load() throws IOException {
