@@ -18,9 +18,9 @@
                     type: newWord.type
                 }).$save(function (word) {
                     $scope.words.push(word);
+                    $scope.words.sort(function(a,b) {return (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0);} );
                 });
             });
-
             $scope.newWord.value = "";
         };
 
