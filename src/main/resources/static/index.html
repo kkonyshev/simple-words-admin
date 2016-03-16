@@ -6,37 +6,58 @@
 <body ng-app="myApp">
 <div class="container" ng-controller="AppController">
     <div class="page-header">
-        <h1>A checklist</h1>
+        <h1>Слова</h1>
     </div>
     <div class="alert alert-info" role="alert" ng-hide="words && words.length > 0">
-        There are no items yet.
+        Нет слов
     </div>
-    <form class="form-horizontal" role="form" ng-submit="addWord(newWord)">
-        <div class="form-group" ng-repeat="word in words">
-            <div class="checkbox col-xs-9">
-                <label>
-                    <input type="text" ng-model="word.value" ng-change="updateWord(word)"/>
-                    <input type="text" ng-model="word.type" ng-change="updateWord(word)"/>
-                    <dropdown placeholder="Colour..." list="colours" selected="colour" property="name"/>
-                </label>
-            </div>
-            <div class="col-xs-3">
-                <button class="pull-right btn btn-danger" type="button" title="Delete"
-                        ng-click="deleteWord(word)">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
-            </div>
-        </div>
-        <hr />
+
+    <form class="form-inline" role="form" ng-submit="addWord(newWordValue, newWordType)">
         <div class="input-group">
-            <input type="text" class="form-control" ng-model="newWord" placeholder="Enter the description..." />
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="submit" ng-disabled="!newWord" title="Add">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
-          </span>
+            <div class="form-group">
+                <label class="sr-only" for="value">Email address</label>
+                <input type="text" class="form-control" id="value" ng-model="newWordValue" placeholder="Слово">
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="type">Email address</label>
+                <input type="text" class="form-control" id="type" ng-model="newWordType" placeholder="Часть речи">
+            </div>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" ng-disabled="!newWordValue || !newWordType" title="Add">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </span>
         </div>
     </form>
+    <hr />
+    <table class="table table-striped table-condensed">
+        <thead>
+        <tr>
+            <th>Слово</th>
+            <th>Часть речи</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="form-group" ng-repeat="word in words">
+            <td ng-class="">
+                <input type="text" class="form-control" ng-model="word.value"/>
+            </td>
+            <td>
+                <input type="text" class="form-control" ng-model="word.type"/>
+            </td>
+            <td>
+                <button class="pull-right btn btn-warning" type="button" title="Update" ng-click="updateWord(word)">
+                    <span class="glyphicon glyphicon-save"></span>
+                </button>
+            </td>
+            <td>
+                <button class="pull-right btn btn-danger" type="button" title="Delete" ng-click="deleteWord(word)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="./bower_components/angular-resource/angular-resource.min.js"></script>

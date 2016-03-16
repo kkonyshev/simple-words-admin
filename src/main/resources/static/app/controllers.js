@@ -4,13 +4,15 @@
             $scope.words = response ? response : [];
         });
 
-        $scope.addWord = function(value) {
+        $scope.addWord = function(value, type) {
             new Word({
-                value: value
+                value: value,
+                type: type
             }).$save(function(word) {
                 $scope.words.push(word);
             });
-            $scope.newWord = "";
+            $scope.newWordValue = "";
+            $scope.newWordType = "";
         };
 
         $scope.updateWord = function(word) {
@@ -19,7 +21,7 @@
 
         $scope.deleteWord = function(word) {
             word.$remove(function() {
-                $scope.words.splice($scope.words.indexOf(item), 1);
+                $scope.words.splice($scope.words.indexOf(word), 1);
             });
         };
     };
