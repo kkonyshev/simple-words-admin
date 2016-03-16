@@ -1,18 +1,27 @@
 (function(angular) {
     var AppController = function($scope, $http, Word) {
+        $scope.newWord = { "value" : "", "type" : ""};
+
         Word.query(function(response) {
             $scope.words = response ? response : [];
         });
 
-        $scope.addWord = function(value, type) {
-            new Word({
-                value: value,
-                type: type
-            }).$save(function(word) {
-                $scope.words.push(word);
+        $scope.wordTypeList = [];
+        $http.get('/word/type').success(function(data) {
+            $scope.wordTypeList = data;
+        });
+
+        $scope.addWord = function(newWord) {
+            newWord.value.split(/\s+/).forEach(function(v) {
+                new Word({
+                    value: v,
+                    type: newWord.type
+                }).$save(function (word) {
+                    $scope.words.push(word);
+                });
             });
-            $scope.newWordValue = "";
-            $scope.newWordType = "";
+
+            $scope.newWord.value = "";
         };
 
         $scope.updateWord = function(word) {
@@ -25,12 +34,8 @@
             });
         };
 
-        $scope.wordTypeList = [];
-        $http.get('/word/type').success(function(data) {
-            console.log("success!");
-            $scope.wordTypeList = data;
-            console.log(data);
-        });
+        $scope.newWord.value = "";
+        $scope.newWord.type = "NOUN";
     };
 
     AppController.$inject = ['$scope', '$http', 'Word'];

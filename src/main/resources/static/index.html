@@ -6,26 +6,30 @@
 <body ng-app="myApp">
 <div class="container" ng-controller="AppController">
     <div class="page-header">
-        <h1>Слова</h1>
+        <button class="btn btn-primary" type="button">
+            Слова <span class="badge">{{words.length}}</span>
+        </button>
     </div>
     <div class="alert alert-info" role="alert" ng-hide="words && words.length > 0">
         Нет слов
     </div>
-    <form class="form-inline" role="form" ng-submit="addWord(newWordValue, newWordType)">
+    <form class="form-inline" role="form" ng-submit="addWord(newWord)">
         <div class="input-group">
             <div class="form-group">
-                <input type="text" class="form-control" id="value" ng-model="newWordValue" placeholder="Слово">
+                <input type="text" size="50" class="form-control" ng-model="newWord.value" placeholder="Слово или несколько слов через пробел">
             </div>
             <div class="form-group">
-                <select class="form-control" name="repeatSelect" id="type" ng-model="newWordType">
+                <select class="form-control" name="repeatSelect" id="type" ng-model="newWord.type">
                     <option ng-repeat="type in wordTypeList" value="{{type}}" ng-selected="wordTypeList[0] == type">{{type}}</option>
                 </select>
             </div>
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="submit" ng-disabled="!newWordValue || newWordType==''" title="Add">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </span>
+            <div class="form-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" ng-disabled="!newWord.value" title="Add">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </span>
+            </div>
         </div>
     </form>
     <hr />
@@ -42,9 +46,7 @@
                 <input type="text" class="form-control" ng-model="word.value"/>
             </td>
             <td>
-                <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="word.type">
-                    <option ng-repeat="type in wordTypeList" value="{{type}}" ng-selected="word.type == type">{{type}}</option>
-                </select>
+                <select class="form-control" ng-model="word.type" ng-options="type for type in wordTypeList"/>
             </td>
             <td>
                 <button class="pull-right btn btn-warning" type="button" title="Update" ng-click="updateWord(word)">
