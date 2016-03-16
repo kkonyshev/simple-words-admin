@@ -14,15 +14,15 @@
     <form class="form-inline" role="form" ng-submit="addWord(newWordValue, newWordType)">
         <div class="input-group">
             <div class="form-group">
-                <label class="sr-only" for="value">Email address</label>
                 <input type="text" class="form-control" id="value" ng-model="newWordValue" placeholder="Слово">
             </div>
             <div class="form-group">
-                <label class="sr-only" for="type">Email address</label>
-                <input type="text" class="form-control" id="type" ng-model="newWordType" placeholder="Часть речи">
+                <select class="form-control" name="repeatSelect" id="type" ng-model="newWordType">
+                    <option ng-repeat="type in wordTypeList" value="{{type}}" ng-selected="wordTypeList[0] == type">{{type}}</option>
+                </select>
             </div>
             <span class="input-group-btn">
-                <button class="btn btn-default" type="submit" ng-disabled="!newWordValue || !newWordType" title="Add">
+                <button class="btn btn-default" type="submit" ng-disabled="!newWordValue || newWordType==''" title="Add">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </span>
@@ -42,9 +42,8 @@
                 <input type="text" class="form-control" ng-model="word.value"/>
             </td>
             <td>
-                <input type="text" class="form-control" ng-model="word.type"/>
-                <select name="repeatSelect" id="repeatSelect" ng-model="wordTypeList">
-                    <option ng-repeat="type in wordTypeList" value="{{type}}">{{type}}</option>
+                <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="word.type">
+                    <option ng-repeat="type in wordTypeList" value="{{type}}" ng-selected="word.type == type">{{type}}</option>
                 </select>
             </td>
             <td>
