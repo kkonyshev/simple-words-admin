@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="./bower_components/bootstrap-css-only/css/bootstrap.min.css" />
+    <script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="./bower_components/jquery/jquery.min.js"></script>
 </head>
 <body ng-app="myApp">
+
 <div class="container" ng-controller="AppController">
     <div class="page-header">
         <button class="btn btn-primary" type="button">Слова <span class="badge">{{words.length}}</span></button>
@@ -63,8 +67,8 @@
         </tbody>
     </table>
 </div>
-<script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
-<script type="text/javascript" src="./bower_components/angular-resource/angular-resource.min.js"></script>
+</div>
+
 <script type="text/javascript" src="./app/app.js"></script>
 <script type="text/javascript" src="./app/controllers.js"></script>
 <script type="text/javascript" src="./app/services.js"></script>
