@@ -123,4 +123,26 @@ public class CollocationTest {
         collocationService.view(collocationService.findAll().iterator().next());
         Assert.assertEquals((long)1, (long)collocationService.findAll().iterator().next().viewCount);
     }
+
+
+    @Test
+    public void testSplitCollocation() {
+        Collocation cl = collocationService.create("собака сидит", CollocationType.COLLOCATION);
+        Assert.assertEquals(2, cl.words.size());
+
+        for (Word w: collocationService.findAll().iterator().next().words) {
+            Assert.assertEquals(WordType.UNDEF, w.type);
+        }
+
+        Word dog = wordService.findByValue("собака");
+        Assert.assertEquals(WordType.UNDEF, dog.type);
+
+        Word sit = wordService.findByValue("сидит");
+        Assert.assertEquals(WordType.UNDEF, sit.type);
+
+        sit.type = WordType.NOUN;
+        wordRepository.save(sit);
+
+        Assert.assertEquals(WordType.NOUN, wordService.findByValue("сидит").type);
+    }
 }

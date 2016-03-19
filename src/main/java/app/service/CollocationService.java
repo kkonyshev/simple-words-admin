@@ -3,6 +3,7 @@ package app.service;
 import app.model.Collocation;
 import app.model.CollocationType;
 import app.model.Word;
+import app.model.WordType;
 import app.repository.CollocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class CollocationService {
     @Autowired
     protected CollocationRepository collocationRepository;
 
+    @Autowired
+    protected WordService wordService;
+
     public Iterable<Collocation> findAll() {
         return collocationRepository.findAll();
     }
@@ -27,7 +31,15 @@ public class CollocationService {
         Collocation collocation = new Collocation();
         collocation.type = type;
         collocation.value = value;
-        return collocationRepository.save(collocation);
+        Collocation c = collocationRepository.save(collocation);
+        for (String s : value.split("\\s+")) {
+            Word w = wordService.findByValue(s);
+            if (w==null) {
+                w = wordService.create(s, WordType.UNDEF);
+            }
+            c = addWord(c, w);
+        }
+        return c;
     }
 
     public Collocation addWord(Collocation collocation, Word word) {
