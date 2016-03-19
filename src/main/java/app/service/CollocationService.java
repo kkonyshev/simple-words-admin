@@ -34,7 +34,7 @@ public class CollocationService {
         Collocation c = collocationRepository.save(collocation);
         for (String s : value.split("\\s+")) {
             Word w = wordService.findByValue(s);
-            if (w==null) {
+            if (w==null || !w.value.equalsIgnoreCase(s)) {
                 w = wordService.create(s, WordType.UNDEF);
             }
             c = addWord(c, w);

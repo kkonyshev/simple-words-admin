@@ -12,6 +12,21 @@
         });
     };
 
+    var CollocationFactory = function($resource) {
+        return $resource('/collocations/:id', {
+            id: '@id'
+        }, {
+            update: {
+                method: "PUT"
+            },
+            remove: {
+                method: "DELETE"
+            }
+        });
+    };
+
     WordFactory.$inject = ['$resource'];
-    angular.module("myApp.services").factory("Word", WordFactory);
+    angular.module("myApp.services")
+        .factory("Word", WordFactory)
+        .factory("Collocation", CollocationFactory);
 }(angular));

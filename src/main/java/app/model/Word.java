@@ -28,7 +28,7 @@ public class Word {
 
   @Override
   public String toString() {
-    return new ObjectPrinter().merge(id, type);
+    return new ObjectPrinter().merge(id, value, type);
   }
 
   @Override

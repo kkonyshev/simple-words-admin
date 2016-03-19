@@ -3,20 +3,11 @@ package app.controller;
 import app.model.Collocation;
 import app.model.CollocationType;
 import app.model.Word;
-import app.model.WordType;
 import app.repository.CollocationRepository;
-import app.repository.WordRepository;
 import app.service.CollocationService;
-import app.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -36,22 +27,26 @@ public class CollocationController {
         return CollocationType.values();
     }
 
-    @RequestMapping(value = "/collocation/page/{page}")
-    public Page<Collocation> page(@PathVariable("page") Integer page) {
-        if (page==null || page<1) {
-            page=1;
-        }
-        Pageable req = new PageRequest(page-1, 20, Sort.Direction.ASC, "value");
-        return collocationRepository.findAll(req);
+    @RequestMapping(value = "/collocations")
+    public Iterable<Collocation> page() {
+        Sort sort = new Sort(Sort.Direction.ASC, "value");
+        return collocationRepository.findAll(sort);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/collocation/{type}/{value}")
-    public Collocation page(@PathVariable("type") String type, @PathVariable("value") String value) {
-        return collocationService.create(value, CollocationType.valueOf(type));
+    @RequestMapping(method = RequestMethod.POST, value = "/collocations")
+    public Collocation create(@RequestBody Collocation collocation) {
+        return collocationService.create(collocation.value, collocation.type);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/collocation/{value}")
-    public void page(@PathVariable("value") String value) {
-        collocationRepository.delete(collocationRepository.findByValue(value));
+    @RequestMapping(method = RequestMethod.PUT, value = "/collocations/{id}")
+    public Collocation update(@PathVariable("id") Long id, @RequestBody Collocation collocation) {
+        //TODO fair update!
+        collocationRepository.delete(id);
+        return collocationService.create(collocation.value, collocation.type);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/collocations/{id}")
+    public void update(@PathVariable("id") Long id) {
+        collocationRepository.delete(collocationRepository.findOne(id));
     }
 }
