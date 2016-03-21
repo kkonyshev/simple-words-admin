@@ -1,132 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="./bower_components/bootstrap-css-only/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <script type="text/javascript" src="./bower_components/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 
 <body ng-app="myApp">
 
-<div class="container" ng-controller="CollocationController">
-    <div class="page-header">
-        <button class="btn btn-primary" type="button">Словосочетания <span class="badge">{{collocations.length}}</span></button>
-    </div>
-    <div class="alert alert-info" role="alert" ng-hide="collocations && collocations.length > 0">
-        Нет словосочетаний
-    </div>
-    <div class="container well">
-        <form class="form-group" role="form" ng-submit="addCollocation(newCollocation)">
-            <div class="col-xs-8">
-                <input type="text" class="form-control" ng-model="newCollocation.value" placeholder="Предложение или словосочетание">
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#collocations">Словосочетания</a></li>
+    <li><a data-toggle="tab" href="#words">Слова</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="collocations" class="tab-pane fade in active">
+        <div class="container" ng-controller="CollocationController">
+            <div class="page-header">
+                <button class="btn btn-primary" type="button">Словосочетания <span class="badge">{{collocations.length}}</span></button>
             </div>
-            <div class="col-xs-3">
-                <select class="form-control" name="repeatSelect" id="type" ng-model="newCollocation.type">
-                    <option ng-repeat="type in collocationTypeList" value="{{type}}" ng-selected="collocationTypeList[0] == type">{{type}}</option>
-                </select>
+            <div class="alert alert-info" role="alert" ng-hide="collocations && collocations.length > 0">
+                Нет словосочетаний
             </div>
-            <div class="col-xs-1">
+            <div class="container well">
+                <form class="form-group" role="form" ng-submit="addCollocation(newCollocation)">
+                    <div class="col-xs-8">
+                        <input type="text" class="form-control" ng-model="newCollocation.value" placeholder="Предложение или словосочетание">
+                    </div>
+                    <div class="col-xs-3">
+                        <select class="form-control" name="repeatSelect" id="type" ng-model="newCollocation.type">
+                            <option ng-repeat="type in collocationTypeList" value="{{type}}" ng-selected="collocationTypeList[0] == type">{{type}}</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-1">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="submit" ng-disabled="!newCollocation.value" title="Add">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </span>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
 
-    <table class="table table-striped table-condensed">
-        <thead>
-        <tr>
-            <th>Слово</th>
-            <th>Часть речи</th>
-            <th>Обновить</th>
-            <th>Удалить</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="form-group" ng-repeat="collocation in collocations">
-            <td>
-                <input type="text" class="form-control" ng-model="collocation.value"/>
-            </td>
-            <td>
-                <select class="form-control" ng-model="collocation.type" ng-options="type for type in collocationTypeList"/>
-            </td>
-            <td>
-                <button class="pull-right btn btn-warning" type="button" title="Update" ng-click="updateCollocation(collocation)">
-                    <span class="glyphicon glyphicon-save"></span>
-                </button>
-            </td>
-            <td>
-                <button class="pull-right btn btn-danger" type="button" title="Delete" ng-click="deleteCollocation(collocation)">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="container" ng-controller="WordController">
-    <div class="page-header">
-        <button class="btn btn-default" type="button">Слова <span class="badge">{{words.length}}</span></button>
+            <table class="table table-striped table-condensed">
+                <thead>
+                <tr>
+                    <th>Слово</th>
+                    <th>Часть речи</th>
+                    <th>Обновить</th>
+                    <th>Удалить</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="form-group" ng-repeat="collocation in collocations">
+                    <td>
+                        <input type="text" class="form-control" ng-model="collocation.value"/>
+                    </td>
+                    <td>
+                        <select class="form-control" ng-model="collocation.type" ng-options="type for type in collocationTypeList"/>
+                    </td>
+                    <td>
+                        <button class="pull-right btn btn-warning" type="button" title="Update" ng-click="updateCollocation(collocation)">
+                            <span class="glyphicon glyphicon-save"></span>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="pull-right btn btn-danger" type="button" title="Delete" ng-click="deleteCollocation(collocation)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="alert alert-info" role="alert" ng-hide="words && words.length > 0">
-        Нет слов
-    </div>
-    <div class="container well">
-        <form class="form-group" role="form" ng-submit="addWord(newWord)">
-            <div class="col-xs-8">
-                <input type="text" class="form-control" ng-model="newWord.value" placeholder="Слово или несколько слов через пробел">
+    <div id="words" class="tab-pane fade">
+        <div class="container" ng-controller="WordController">
+            <div class="page-header">
+                <button class="btn btn-default" type="button">Слова <span class="badge">{{words.length}}</span></button>
             </div>
-            <div class="col-xs-3">
-                <select class="form-control" name="repeatSelect" id="type" ng-model="newWord.type">
-                    <option ng-repeat="type in wordTypeList" value="{{type}}" ng-selected="wordTypeList[0] == type">{{type}}</option>
-                </select>
+            <div class="alert alert-info" role="alert" ng-hide="words && words.length > 0">
+                Нет слов
             </div>
-            <div class="col-xs-1">
+            <div class="container well">
+                <form class="form-group" role="form" ng-submit="addWord(newWord)">
+                    <div class="col-xs-8">
+                        <input type="text" class="form-control" ng-model="newWord.value" placeholder="Слово или несколько слов через пробел">
+                    </div>
+                    <div class="col-xs-3">
+                        <select class="form-control" name="repeatSelect" id="cType" ng-model="newWord.type">
+                            <option ng-repeat="type in wordTypeList" value="{{type}}" ng-selected="wordTypeList[0] == type">{{type}}</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-1">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="submit" ng-disabled="!newWord.value" title="Add">
-                            <span class="glyphicon glyphicon-plus"></span>
+                        <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </span>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
 
-    <table class="table table-striped table-condensed">
-        <thead>
-            <tr>
-                <th>Слово</th>
-                <th>Часть речи</th>
-                <th>Обновить</th>
-                <th>Удалить</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="form-group" ng-repeat="word in words">
-                <td>
-                    <input type="text" class="form-control" ng-model="word.value"/>
-                </td>
-                <td>
-                    <select class="form-control" ng-model="word.type" ng-options="type for type in wordTypeList"/>
-                </td>
-                <td>
-                    <button class="pull-right btn btn-warning" type="button" title="Update" ng-click="updateWord(word)">
-                        <span class="glyphicon glyphicon-save"></span>
-                    </button>
-                </td>
-                <td>
-                    <button class="pull-right btn btn-danger" type="button" title="Delete" ng-click="deleteWord(word)">
-                        <span class="glyphicon glyphicon-trash"></span>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            <table class="table table-striped table-condensed">
+                <thead>
+                <tr>
+                    <th>Слово</th>
+                    <th>Часть речи</th>
+                    <th>Обновить</th>
+                    <th>Удалить</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="form-group" ng-repeat="word in words">
+                    <td>
+                        <input type="text" class="form-control" ng-model="word.value"/>
+                    </td>
+                    <td>
+                        <select class="form-control" ng-model="word.type" ng-options="type for type in wordTypeList"/>
+                    </td>
+                    <td>
+                        <button class="pull-right btn btn-warning" type="button" title="Update" ng-click="updateWord(word)">
+                            <span class="glyphicon glyphicon-save"></span>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="pull-right btn btn-danger" type="button" title="Delete" ng-click="deleteWord(word)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="./bower_components/angular-resource/angular-resource.min.js"></script>
-<script type="text/javascript" src="./bower_components/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="./app/app.js"></script>
 <script type="text/javascript" src="./app/controllers.js"></script>
 <script type="text/javascript" src="./app/services.js"></script>
